@@ -20,9 +20,9 @@ sub getStructure($) {
 		{ id => "device", type => "device" },
 		{ id => "title", type => "text", default => { type => "field", value => "device"} },
 		{ id => "label", type => "text", default => { type => "field", value => "device"} },
-		{ id => "desiredTemp", type => "reading", refdevice => "device", default => { type => "const", value => "desired-temp" } },
+		{ id => "desiredTemp", type => "reading", refdevice => "device", default => { type => "const", value => "desiredTemperature" } },
 		{ id => "desiredSet", type => "set", refdevice => "device", default => { type => "field", value => "desiredTemp" } },
-		{ id => "measuredTemp", type => "reading", refdevice => "device", default => { type => "const", value => "measured-temp" } },
+		{ id => "measuredTemp", type => "reading", refdevice => "device", default => { type => "const", value => "temperature" } },
 		{ id => "valvePos1", type => "device-reading",  
 			device => { default => { type => "field", value => "device"} },
 			reading => { default => { type => "const", value => "ValvePosition"} } },
@@ -37,10 +37,10 @@ sub getStructure($) {
 		{ id => "readonly", type => "text", options => [ "on", "off" ], 
 			default => { type => "const", value => "off" } },
 		{ id => "popup", type => "dialog", default=> { type => "const", value => "inactive"} },
-		{ id => "data-min", type => "text", options => [ "", "5" ], default => { type => "const", value => "" } },
-		{ id => "data-max", type => "text", options => [ "", "30" ], default => { type => "const", value => "" } },
-		{ id => "data-off", type => "text", options => [ "", "off" ], default => { type => "const", value => "" } },
-		{ id => "data-boost", type => "text", options => [ "", "boost" ], default => { type => "const", value => "" } }
+		{ id => "dataMin", type => "text", options => [ "5", "" ], default => { type => "const", value => "5" } },
+		{ id => "dataMax", type => "text", options => [ "30", "" ], default => { type => "const", value => "30" } },
+		{ id => "dataOff", type => "text", options => [ "off", "" ], default => { type => "const", value => "off" } },
+		{ id => "dataBoost", type => "text", options => [ "boost", "" ], default => { type => "const", value => "boost" } }
 		];
 };
 
@@ -73,7 +73,20 @@ sub getHTML($){
     if($thermostatPos) {
 		$result .= ' style="position:absolute;top:'.$thermostatPos.'px;"'; 
 	};
-	$result .= ' data-off="'.$self->{data-off}.'" data-boost="'.$self->{data-boost}.'" data-min="'.$self->{data-min}.'" data-max="'.$self->{data-max}.'" data-type="thermostat" data-device="'.$self->{device}.'" data-get="'.$self->{desiredTemp}.'" data-set="'.$self->{desiredSet}.'" data-temp="'.$self->{measuredTemp}.'" data-step="0.5" ';
+	
+	if($self->{dataOff} ne "") {
+		$result .= ' data-off="'.$self->{dataOff}.'" ';
+	};
+	if($self->{dataBoost} ne "") {
+		$result .= ' data-boost="'.$self->{dataBoost}.'" ';
+	};
+	if($self->{dataMin} ne "") {
+		$result .= ' data-min="'.$self->{dataMin}.'" ';
+	};
+	if($self->{dataMax} ne "") {
+		$result .= ' data-max="'.$self->{dataMax}.'" ';
+	};
+	$result .= ' data-type="thermostat" data-device="'.$self->{device}.'" data-get="'.$self->{desiredTemp}.'" data-set="'.$self->{desiredSet}.'" data-temp="'.$self->{measuredTemp}.'" data-step="0.5" ';
 	if($self->{size} eq "normal") {
 		$result .= 'data-width="100" data-height="80"';
 	}else{	
