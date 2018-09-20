@@ -36,7 +36,11 @@ sub getStructure($) {
 			default => { type => "const", value => "normal" } }, 	
 		{ id => "readonly", type => "text", options => [ "on", "off" ], 
 			default => { type => "const", value => "off" } },
-		{ id => "popup", type => "dialog", default=> { type => "const", value => "inactive"} }			
+		{ id => "popup", type => "dialog", default=> { type => "const", value => "inactive"} },
+		{ id => "data-min", type => "text", options => [ "", "5" ], default => { type => "const", value => "" } },
+		{ id => "data-max", type => "text", options => [ "", "30" ], default => { type => "const", value => "" } },
+		{ id => "data-off", type => "text", options => [ "", "off" ], default => { type => "const", value => "" } },
+		{ id => "data-boost", type => "text", options => [ "", "boost" ], default => { type => "const", value => "" } }
 		];
 };
 
@@ -69,7 +73,7 @@ sub getHTML($){
     if($thermostatPos) {
 		$result .= ' style="position:absolute;top:'.$thermostatPos.'px;"'; 
 	};
-	$result .= ' data-type="thermostat" data-device="'.$self->{device}.'" data-get="'.$self->{desiredTemp}.'" data-set="'.$self->{desiredSet}.'" data-temp="'.$self->{measuredTemp}.'" data-step="0.5" ';
+	$result .= ' data-off="'.$self->{data-off}.'" data-boost="'.$self->{data-boost}.'" data-min="'.$self->{data-min}.'" data-max="'.$self->{data-max}.'" data-type="thermostat" data-device="'.$self->{device}.'" data-get="'.$self->{desiredTemp}.'" data-set="'.$self->{desiredSet}.'" data-temp="'.$self->{measuredTemp}.'" data-step="0.5" ';
 	if($self->{size} eq "normal") {
 		$result .= 'data-width="100" data-height="80"';
 	}else{	
