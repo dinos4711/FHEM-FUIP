@@ -18,6 +18,7 @@ sub _getDevices($$){
 			my $ignore = main::AttrVal($dev,"ignore","0");
 			if($ignore ne '1') {
 				$devices{$dev}{$reading} = 1;
+				$devices{$dev}{alias} = main::AttrVal($dev,"alias",$name);
 			};
 		};
 	};
@@ -53,10 +54,11 @@ sub getHTML($){
 			$count = 0;
 		}
 		$count++;
-		$result.= '<tr><td>
-					<div data-type="label" class="left fuip-color">'.$devKey.'</div>
-					</td><td>';
 		my $device = $devices->{$devKey};
+		my $alias = $device->{alias};
+		$result.= '<tr><td>
+					<div data-type="label" class="left fuip-color">'.$alias.'</div>
+					</td><td>';
 		if(exists($device->{batteryLevel})){
 			$result .= '<div style="margin-top:-26px;margin-bottom:-30px;margin-right:-10px" data-type="symbol" 
 							data-device="'.$devKey.'" data-get="batteryLevel"
