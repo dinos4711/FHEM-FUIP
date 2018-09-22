@@ -6,7 +6,7 @@ use warnings;
 use lib::FUIP::View;
 use parent -norequire, 'FUIP::View';
 use lib::FUIP::Model;
-	
+
 
 sub _getDevices($$){
 	my ($name,$deviceFilter) = @_;
@@ -15,8 +15,11 @@ sub _getDevices($$){
 	push(@readings,"Activity") if($deviceFilter eq "all");
 	for my $reading (@readings) {
 		for my $dev (@{FUIP::Model::getDevicesForReading($name,$reading)}) {
-			$devices{$dev}{$reading} = 1;
-		};	
+			my $ignore = main::AttrVal($dev,"ignore","0");
+			if($ignore ne '1') {
+				$devices{$dev}{$reading} = 1;
+			};
+		};
 	};
 	# only devices with battery, but we want the Activity reading nevertheless, if it exists
 	if($deviceFilter ne "all") {
@@ -28,14 +31,14 @@ sub _getDevices($$){
 		};
 	};
 	return \%devices;
-};	
-	
-	
+};
+
+
 sub getHTML($){
 	my ($self) = @_;
 	my $result = '<table width="100%"';
-	my $devices = _getDevices($self->{fuip}{NAME},$self->{deviceFilter});				
-	my $numDevs = keys %$devices;				
+	my $devices = _getDevices($self->{fuip}{NAME},$self->{deviceFilter});
+	my $numDevs = keys %$devices;
 	my $count = 0;
 	use integer;
 	# avoid division by zero error
@@ -48,12 +51,12 @@ sub getHTML($){
 		if($count == $perCol) {
 			$result .= '</table></td><td style="width:'.$colWidth.'%;"></td><td><table>';
 			$count = 0;
-		}  
+		}
 		$count++;
 		$result.= '<tr><td>
 					<div data-type="label" class="left fuip-color">'.$devKey.'</div>
 					</td><td>';
-		my $device = $devices->{$devKey};			
+		my $device = $devices->{$devKey};
 		if(exists($device->{batteryLevel})){
 			$result .= '<div style="margin-top:-26px;margin-bottom:-30px;margin-right:-10px" data-type="symbol" 
 							data-device="'.$devKey.'" data-get="batteryLevel"
@@ -81,18 +84,18 @@ sub getHTML($){
 		if(exists($device->{batVoltage})){
 			$result .= '<div data-type="label" data-device="'.$devKey.'" data-get="batVoltage" data-unit="V" class="fuip-color"></div>';
 		};
-		$result .= '</td><td style=\"padding-left:20px\">'; 
+		$result .= '</td><td style=\"padding-left:20px\">';
 		if(exists($device->{Activity})){
 			$result .= '<div data-type="label" data-device="'.$devKey.'" 
 							data-get="Activity" data-colors=\'["red","green","yellow"]\' data-limits=\'["dead","alive","unknown"]\'></div>';
 		};
-		$result .= '</td></tr>';  
+		$result .= '</td></tr>';
 	}
-	$result .= '</table></td><td style="width:'.$colWidth.'%;"></td></tr></table>'; 
-	return $result;	
+	$result .= '</table></td><td style="width:'.$colWidth.'%;"></td></tr></table>';
+	return $result;
 };
 
-	
+
 sub dimensions($;$$){
 	my $self = shift;
 	# we ignore any settings
@@ -100,9 +103,9 @@ sub dimensions($;$$){
 	use integer;
 	my $numDevs = keys %$devices;
 	return (($self->{width} eq "fixed") ? 650 : "auto", 19 * ($numDevs / 2 + $numDevs % 2) + 8);
-};	
-	
-	
+};
+
+
 sub getStructure($) {
 	# class method
 	# returns general structure of the view without instance values
@@ -110,17 +113,17 @@ sub getStructure($) {
 	return [
 		{ id => "class", type => "class", value => $class },
 		{ id => "title", type => "text", default => { type => "const", value => "Batteries"} },
-		{ id => "deviceFilter", type => "text", options => [ "all", "battery"], 
-			default => { type => "const", value => "all" } }, 
+		{ id => "deviceFilter", type => "text", options => [ "all", "battery"],
+			default => { type => "const", value => "all" } },
 		{ id => "width", type => "text", options => [ "fixed", "auto" ],
 			default => { type => "const", value => "fixed" } },
-		{ id => "columns", type => "text", options => [1,2,3,4], 
+		{ id => "columns", type => "text", options => [1,2,3,4],
 			default => { type => "const", value => 2 } }
 		];
 };
 
 
 # register me as selectable
-$FUIP::View::selectableViews{"FUIP::View::Batteries"}{title} = "Batteries"; 
-	
-1;	
+$FUIP::View::selectableViews{"FUIP::View::Batteries"}{title} = "Batteries";
+
+1;
