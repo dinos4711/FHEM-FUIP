@@ -37,8 +37,8 @@ sub getStructure($) {
 		{ id => "readonly", type => "text", options => [ "on", "off" ], 
 			default => { type => "const", value => "off" } },
 		{ id => "popup", type => "dialog", default=> { type => "const", value => "inactive"} },
-		{ id => "dataMin", type => "text", options => [ "5", "" ], default => { type => "const", value => "5" } },
-		{ id => "dataMax", type => "text", options => [ "30", "" ], default => { type => "const", value => "30" } },
+		{ id => "dataMin", type => "text", default => { type => "const", value => "5" } },
+		{ id => "dataMax", type => "text", default => { type => "const", value => "30" } },
 		{ id => "dataOff", type => "text", options => [ "off", "" ], default => { type => "const", value => "off" } },
 		{ id => "dataBoost", type => "text", options => [ "boost", "" ], default => { type => "const", value => "boost" } }
 		];
