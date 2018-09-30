@@ -8,9 +8,9 @@ DIR FHEM/lib/FUIP/View
 DIR FHEM/lib/FUIP/jquery-ui
 DIR FHEM/lib/FUIP/jquery-ui/images
 UPD 2018-09-30_15:42:27 60045 FHEM/42_FUIP.pm
-UPD 2018-09-30_15:34:15 10577 FHEM/lib/FUIP/Model.pm
+UPD 2018-09-30_15:46:26 10229 FHEM/lib/FUIP/Model.pm
 UPD 2018-09-20_18:09:59 9141 FHEM/lib/FUIP/View.pm
-UPD 2018-09-30_15:39:10 5942 FHEM/lib/FUIP/View/Batteries.pm
+UPD 2018-09-30_15:49:25 5802 FHEM/lib/FUIP/View/Batteries.pm
 UPD 2018-09-20_18:09:59 1336 FHEM/lib/FUIP/View/Brightness.pm
 UPD 2018-09-20_18:09:59 4079 FHEM/lib/FUIP/View/Cell.pm
 UPD 2018-09-20_18:09:59 943 FHEM/lib/FUIP/View/Clock.pm
@@ -31,14 +31,14 @@ UPD 2018-09-20_18:09:59 2589 FHEM/lib/FUIP/View/Select.pm
 UPD 2018-09-20_18:09:59 4743 FHEM/lib/FUIP/View/ShutterControl.pm
 UPD 2018-09-20_18:09:59 2616 FHEM/lib/FUIP/View/ShutterOverview.pm
 UPD 2018-09-20_18:09:59 1807 FHEM/lib/FUIP/View/ShutterTimer.pm
-UPD 2018-09-30_15:34:15 1774 FHEM/lib/FUIP/View/SimpleSwitch.pm
+UPD 2018-09-30_15:48:03 1713 FHEM/lib/FUIP/View/SimpleSwitch.pm
 UPD 2018-09-20_18:09:59 1576 FHEM/lib/FUIP/View/SpinDim.pm
 UPD 2018-09-20_18:09:59 1906 FHEM/lib/FUIP/View/Sysmon.pm
 UPD 2018-09-23_11:25:54 4821 FHEM/lib/FUIP/View/Thermostat.pm
 UPD 2018-09-20_18:09:59 1397 FHEM/lib/FUIP/View/Title.pm
 UPD 2018-09-20_18:09:59 2060 FHEM/lib/FUIP/View/UpStopDown.pm
-UPD 2018-09-30_15:34:15 2714 FHEM/lib/FUIP/View/WeatherDetail.pm
-UPD 2018-09-30_15:34:15 2498 FHEM/lib/FUIP/View/WeatherOverview.pm
+UPD 2018-09-30_15:47:45 2623 FHEM/lib/FUIP/View/WeatherDetail.pm
+UPD 2018-09-30_15:47:41 2418 FHEM/lib/FUIP/View/WeatherOverview.pm
 UPD 2018-09-20_18:09:59 7260 FHEM/lib/FUIP/css/theme.blue.css
 UPD 2018-09-20_18:09:59 5774 FHEM/lib/FUIP/css/theme.default.css
 UPD 2018-09-20_18:09:59 797 FHEM/lib/FUIP/css/widget_weatherdetail.css
