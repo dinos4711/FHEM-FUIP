@@ -18,7 +18,7 @@ sub _getDevices($$){
 			my $ignore = main::AttrVal($dev,"ignore","0");
 			if($ignore ne '1') {
 				$devices{$dev}{$reading} = 1;
-				$devices{$dev}{alias} = main::AttrVal($dev,"alias",$name);
+				$devices{$dev}{alias} = main::AttrVal($dev,"alias",$dev);
 			};
 		};
 	};
