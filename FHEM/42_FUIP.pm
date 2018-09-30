@@ -4,7 +4,7 @@
 # written by Thorsten Pferdekaemper
 #
 ##############################################
-# $Id: 42_FUIP.pm 00046 2018-09-20 19:00:00Z Thorsten Pferdekaemper $
+# $Id: 42_FUIP.pm 00099 2018-09-24 15:00:00Z Thorsten Pferdekaemper $
 
 package main;
 
@@ -350,6 +350,10 @@ sub renderPage($$$) {
 						background-color: initial;
 					}	
                 </style>
+				<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=yes\" />
+				<meta name=\"mobile-web-app-capable\" content=\"yes\">
+				<meta name=\"apple-mobile-web-app-capable\" content=\"yes\">
+				<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">
 				<meta name=\"widget_base_width\" content=\"".$baseWidth."\">
 				<meta name=\"widget_base_height\" content=\"".$baseHeight."\">".
 				(main::AttrVal($hash->{NAME},"fhemwebUrl",undef) ? "<meta name=\"fhemweb_url\" content=\"".main::AttrVal($hash->{NAME},"fhemwebUrl",undef)."\">" : "").
@@ -1275,8 +1279,15 @@ sub setField($$$$$) {
 	$refIntoView->{$compName} = main::urlDecode($values->{$nameInValues}) if(defined($values->{$nameInValues}));
 	# should this be an array?
 	if($field->{type} eq "setoptions") {
-		my @options = split(/,/,$refIntoView->{$compName});
-		$refIntoView->{$compName} = \@options;
+		# it is still "allowed" to have something which evaluates to an array
+		$DB::single = 1;
+		my $options = eval($refIntoView->{$compName});
+		if(ref($options) eq "ARRAY") {
+			$refIntoView->{$compName} = $options;
+		}else{
+			my @options = split(/,/,$refIntoView->{$compName});
+			$refIntoView->{$compName} = \@options;
+		};	
 	};
 	# if this has a default setting 
 	if(defined($refIntoField->{default}) and defined($values->{$nameInValues."-check"})) {
